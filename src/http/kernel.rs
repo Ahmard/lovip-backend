@@ -38,7 +38,7 @@ pub fn register_routes(actix_config: &mut ServiceConfig) {
 }
 
 pub fn setup_cors() -> Cors {
-    let url_str = env::var("FRONTEND_ADDRESS").unwrap();
+    let url_str = env::var("CORS_ALLOWED").unwrap();
     let urls = url_str.as_str().split(",");
 
     let mut cors = Cors::default();
