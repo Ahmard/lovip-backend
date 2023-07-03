@@ -38,8 +38,15 @@ pub fn register_routes(actix_config: &mut ServiceConfig) {
 }
 
 pub fn setup_cors() -> Cors {
-    Cors::default()
-        .allowed_origin(env::var("FRONTEND_ADDRESS").unwrap().as_str())
+    let url_str = env::var("FRONTEND_ADDRESS").unwrap();
+    let urls = url_str.as_str().split(",");
+
+    let mut cors = Cors::default();
+    for url in urls {
+        cors = cors.allowed_origin(url);
+    }
+
+    cors
         .allowed_methods(vec!["GET", "POST", "PUT", "PATCH", "DELETE"])
         .allowed_headers(vec![header::AUTHORIZATION, header::ACCEPT])
         .allowed_header(header::CONTENT_TYPE)

@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  lovip-backend-api:
+    container_name: lovip-backend
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "${PORT}:${PORT}"
+    depends_on:
+      - lovip-backend-db
+    networks:
+      - main
+
+networks:
+  main:
+    driver: bridge
